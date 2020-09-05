@@ -17,14 +17,13 @@ class Search extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.searchUsers(this.state.keyword);
-    this.setState({ keyword: "" });
-    // if(this.state.keyword=''){
-    //         this.props.setAlert('Lütfen Bir Anahtar Kelime Giriniz','danger')
-    // }else{
-        
-    // }
-    
+
+    if ((this.state.keyword === '')) {
+      this.props.setAlert('Lütfen Bir Anahtar Kelime Giriniz', 'danger');
+    } else {
+      this.props.searchUsers(this.state.keyword);
+      this.setState({ keyword: '' });
+    }
   }
   render() {
     return (

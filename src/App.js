@@ -32,12 +32,7 @@ class App extends Component {
     }, 1000);
   }
 
-  setAlert(msg, type) {
-    this.setState({
-      alert: msg,
-      type,
-    });
-  }
+  
 
   searchUsers(keyword) {
     this.setState({
@@ -59,11 +54,17 @@ class App extends Component {
   clearUsers() {
     this.setState({ users: [] });
   }
-
+  setAlert(msg, type) {
+    this.setState({alert: {msg,type} });
+  }
+  
+     
+    
+ 
   render() {
     return (
       <>
-        <Navbar  title="Github Finder" />
+        <Navbar  title="Github Finder" /> 
         <Alert alert={this.state.alert} />
         <Search
           searchUsers={this.searchUsers}
