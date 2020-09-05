@@ -4,14 +4,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Users from "./Components/Users";
 import axios from "axios";
 import Search from "./Components/Search";
-
+import Alert from "./Components/Alert";
 class App extends Component {
   constructor(props) {
     super(props);
     this.searchUsers = this.searchUsers.bind(this);
+    this.clearUsers = this.clearUsers.bind(this);
+    this.setAlert = this.setAlert.bind(this);
     this.state = {
       users: [],
       loading: false,
+      alert:null,
     };
   }
   componentDidMount() {
@@ -29,6 +32,13 @@ class App extends Component {
     }, 1000);
   }
 
+  setAlert(msg, type) {
+    this.setState({
+      alert: msg,
+      type,
+    });
+  }
+
   searchUsers(keyword) {
     this.setState({
       loading: true,
@@ -41,16 +51,27 @@ class App extends Component {
           this.setState({
             users: response.data.items,
             loading: false,
+            
           })
         );
     }, 1000);
+  }
+  clearUsers() {
+    this.setState({ users: [] });
   }
 
   render() {
     return (
       <>
-        <Navbar icon="faCoffee" title="Github Finder" />
-        <Search searchUsers={this.searchUsers} />
+        <Navbar  title="Github Finder" />
+        <Alert alert={this.state.alert} />
+        <Search
+          searchUsers={this.searchUsers}
+          clearUsers={this.clearUsers}
+          showClearButton={this.state.users.length > 0 ? true : false}
+          setAlert={this.setAlert}
+        />
+
         <Users users={this.state.users} loading={this.state.loading} />
       </>
     );
